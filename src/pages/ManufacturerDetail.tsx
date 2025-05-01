@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../services/api';
 import { Manufacturer } from '../types';
+import { AxiosResponse } from 'axios';
 
 const ManufacturerDetail: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [manufacturer, setManufacturer] = useState<Manufacturer | null>(null);
 
   useEffect(() => {
     api.get(`/manufacturers/${id}`)
-      .then((res) => setManufacturer(res.data))
-      .catch((err) => console.error("Failed to fetch manufacturer", err));
+      .then((res: AxiosResponse<Manufacturer>) => setManufacturer(res.data))
+      .catch((err: unknown) => {
+        console.error("Failed to fetch manufacturer", err);
+      });
   }, [id]);
 
   if (!manufacturer) return <p>Loading manufacturer...</p>;

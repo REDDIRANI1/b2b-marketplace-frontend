@@ -3,7 +3,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 interface Props {
-  children: JSX.Element;
+  children: React.ReactNode;
+
 }
 
 const PrivateRoute: React.FC<Props> = ({ children }) => {
